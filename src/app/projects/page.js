@@ -1,35 +1,37 @@
-// src/app/projects/page.js
-export async function getStaticProps() {
-  const res = await fetch("https://api.github.com/users/MdNazrulHaqAnsari/repos");
-  const repositories = await res.json();
+export const metadata = {
+  title: "Projects",
+};
 
-  const projects = repositories.map((repo) => ({
-    name: repo.name,
-    html_url: repo.html_url,
-    demo_url: `https://raw.githubusercontent.com/MdNazrulHaqAnsari/${repo.name}/main/demo.jpg`,
-  }));
-
-  return {
-    props: {
-      projects,
-    },
-  };
+async function fetchRepositories() {
+  const response = await fetch("https://api.github.com/users/MdNazrulHaqAnsari/repos", {
+    next: { revalidate: 60 }, // Revalidate data every 60 seconds
+  });
+  if (!response.ok) {
+    throw new Error("Failed to fetch repositories");
+  }
+  return response.json();
 }
 
-export default function Projects({ projects }) {
+export default async function ProjectsPage() {
+  const repositories = await fetchRepositories();
+
   return (
     <div>
       <h1>Projects</h1>
       <ul>
-        {projects.map((project) => (
-          <li key={project.name}>
-            <a href={project.html_url} target="_blank" rel="noopener noreferrer">
-              <img src={project.demo_url} alt={`${project.name} demo`} />
-              {project.name}
+        {repositories.map((repo) => (
+          <li key={repo.id}>
+            <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
+              <img
+                src={`https://raw.githubusercontent.com/MdNazrulHaqAnsari/${repo.name}/main/demo.jpg`}
+                alt={`${repo.name} demo`}
+                style={{ width: "200px", height: "auto" }}
+              />
+              <p>{repo.name}</p>
             </a>
           </li>
         ))}
       </ul>
     </div>
   );
-          }
+}
