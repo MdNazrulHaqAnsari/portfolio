@@ -6,7 +6,7 @@ export async function getStaticProps() {
   const projects = repositories.map((repo) => ({
     name: repo.name,
     html_url: repo.html_url,
-    demo_url: `https://raw.githubusercontent.com/<username>/${repo.name}/main/demo.jpg`,
+    demo_url: `https://raw.githubusercontent.com/MdNazrulHaqAnsari/${repo.name}/main/demo.jpg`,
   }));
 
   return {
