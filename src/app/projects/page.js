@@ -1,6 +1,6 @@
 // src/app/projects/page.js
 export async function getStaticProps() {
-  const res = await fetch("https://api.github.com/users/<username>/repos");
+  const res = await fetch("https://api.github.com/users/MdNazrulHaqAnsari/repos");
   const repositories = await res.json();
 
   const projects = repositories.map((repo) => ({
