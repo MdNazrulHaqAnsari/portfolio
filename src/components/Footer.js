@@ -1,7 +1,7 @@
 import Image from "next/image";
 export default function Footer() {
   return (
-    <footer className="flex flex-col items-center w-full row-start-3 p-0 text-sm text-center sm:p-5 sm:flex-row sm:justify-between sm:text-base">
+    <footer className="fixed bottom-0 left-0 flex flex-col items-center w-full row-start-3 p-0 text-sm text-center sm:p-5 sm:flex-row sm:justify-between sm:text-base">
       <p className="text-gray-600">
         &copy; {new Date().getFullYear()} | Mohammed Nazrul Haq Ansari
       </p>

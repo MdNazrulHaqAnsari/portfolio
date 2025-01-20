@@ -1,19 +1,8 @@
-// import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import headerNavLinks from "@/components/headerNavLinks";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import MobileNav from "@/components/MobileNav";
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
 
 export const metadata = {
   title: "Mohammed Nazrul Haq Ansari - Portfolio",
@@ -24,9 +13,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <div className="flex flex-col justify-between h-screen ">
+        <div className="flex flex-col min-h-screen">
           <header className="flex items-center justify-between">
-            {/* <div className="flex items-center text-base leading-5">
+            <div className="flex items-center text-base leading-5">
               <div className="hidden py-5 sm:block">
                 {headerNavLinks.map((link) => (
                   <Link
@@ -39,9 +28,10 @@ export default function RootLayout({ children }) {
                 ))}
               </div>
               <MobileNav />
-            </div> */}
+            </div>
           </header>
-          <main className="items-center justify-center">{children}</main>
+          {/* Add padding to prevent content overlap */}
+          <main className="flex-grow pb-16">{children}</main>
           <Footer />
         </div>
       </body>
