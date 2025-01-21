@@ -36,6 +36,7 @@ export default async function ProjectsPage() {
   );
 }
 */
+"use client";
 import { useEffect, useState } from "react";
 
 export default function Projects() {
