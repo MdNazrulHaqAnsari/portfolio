@@ -2,7 +2,8 @@ const headerNavLinks = [
   // { href: "/", title: "Home" },
   // { href: "/about", title: "About" },
   // { href: "/projects", title: "Projects" },
-  { href: "", title: "<No Links Available> 😢" },
+  { href: "/", title: "Home" },
+  { href: "/about", title: "About" },
 ];
 
 export default headerNavLinks;

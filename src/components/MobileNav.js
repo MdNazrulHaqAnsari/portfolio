@@ -22,7 +22,7 @@ const MobileNav = () => {
     <div className="sm:hidden">
       <button
         type="button"
-        className="w-8 h-8 mt-5 ml-5 rounded"
+        className="w-8 h-8 mt-2 mr-2 rounded"
         aria-label="Toggle Menu"
         onClick={onToggleNav}
       >
@@ -40,14 +40,14 @@ const MobileNav = () => {
         </svg>
       </button>
       <div
-        className={`fixed top-0 left-0 z-10 h-full w-full transform bg-gray-200 opacity-95 duration-300 ease-in-out dark:bg-gray-800 ${
+        className={`fixed top-0 left-0 h-screen backdrop-blur-sm w-full transform opacity-100 z-50 duration-300 ease-in-out bg-black ${
           navShow ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex justify-end">
           <button
             type="button"
-            className="w-8 h-8 mt-5 mr-5 rounded"
+            className="w-8 h-8 mt-2 mr-2 rounded"
             aria-label="Toggle Menu"
             onClick={onToggleNav}
           >
@@ -67,10 +67,10 @@ const MobileNav = () => {
         </div>
         <nav className="fixed h-full mt-8">
           {headerNavLinks.map((link) => (
-            <div key={link.title} className="px-12 py-4">
+            <div key={link.title} className="px-12 py-2">
               <Link
                 href={link.href}
-                className="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
+                className="text-xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
                 onClick={onToggleNav}
               >
                 {link.title}

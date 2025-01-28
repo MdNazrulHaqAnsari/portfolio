@@ -6,7 +6,7 @@ import MobileNav from "@/components/MobileNav";
 
 export const metadata = {
   title: "Mohammed Nazrul Haq Ansari - Portfolio",
-  description: "",
+  description: "Mohammed Nazrul Haq Ansari's Portfolio",
 };
 
 export default function RootLayout({ children }) {
@@ -14,9 +14,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <div className="flex flex-col min-h-screen">
-          <header className="flex items-center justify-between">
-            <div className="flex items-center text-base leading-5">
-              <div className="hidden py-5 sm:block">
+          <header className="flex flex-row items-center h-12 fixed top-0 left-0 w-screen backdrop-blur-sm">
+            <div className="flex  flex-row w-screen items-center text-base justify-between leading-5">
+              <div className="pl-5"></div>
+              <div className="hidden right-0 py-5 sm:block">
                 {headerNavLinks.map((link) => (
                   <Link
                     key={link.title}
@@ -31,7 +32,9 @@ export default function RootLayout({ children }) {
             </div>
           </header>
           {/* Add padding to prevent content overlap */}
-          <main className="flex-grow pb-16">{children}</main>
+          <main className="flex flex-row items-center justify-center min-h-[inherit] w-screen">
+            {children}
+          </main>
           <Footer />
         </div>
       </body>
