@@ -1,55 +1,21 @@
-/* export const metadata = {
-  title: "Projects",
-};
-
-async function fetchRepositories() {
-  const response = await fetch("https://api.github.com/users/MdNazrulHaqAnsari/repos", {
-    next: { revalidate: 60 }, // Revalidate data every 60 seconds
-  });
-  if (!response.ok) {
-    throw new Error("Failed to fetch repositories");
-  }
-  return response.json();
-}
-
-export default async function ProjectsPage() {
-  const repositories = await fetchRepositories();
-
-  return (
-    <div>
-      <h1>Projects</h1>
-      <ul>
-        {repositories.map((repo) => (
-          <li key={repo.id}>
-            <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
-              <img
-                src={`https://raw.githubusercontent.com/MdNazrulHaqAnsari/${repo.name}/main/demo.jpg`}
-                alt={`${repo.name} demo`}
-                style={{ width: "200px", height: "auto" }}
-              />
-              <p>{repo.name}</p>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-*/
 "use client";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Projects() {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState(null); // null = loading, [] = no projects
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch("/api/getRepositories");
+        const response = await fetch("/api/getRepo");
         const data = await response.json();
         setProjects(data);
       } catch (error) {
         console.error("Error fetching projects:", error);
+        setProjects([]); // Treat errors as no projects
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -57,21 +23,75 @@ export default function Projects() {
   }, []);
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold mb-6">Projects</h1>
+    <div className="w-screen mt-5 p-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.map((project) => (
-          <div key={project.name} className="border p-4 rounded shadow">
-            <a href={project.html_url} target="_blank" rel="noopener noreferrer">
-              <img
-                src={project.demo_url}
-                alt={`${project.name} preview`}
-                className="w-full h-48 object-cover mb-4"
-              />
-              <h2 className="text-xl font-semibold">{project.name}</h2>
-            </a>
+        {/* Skeleton Loader */}
+        {loading &&
+          Array(6)
+            .fill(0)
+            .map((_, i) => (
+              <div
+                key={i}
+                className="bg-black rounded-lg p-4 border-2 border-x-red-100 shadow-lg flex flex-col animate-pulse"
+              >
+                <div className="h-48 bg-gray-700 rounded w-full"></div>
+                <div className="my-4 h-6 bg-gray-700 w-3/4 mx-auto rounded"></div>
+                <div className="flex justify-center gap-4">
+                  <div className="h-10 w-24 bg-gray-700 rounded"></div>
+                  <div className="h-10 w-24 bg-gray-700 rounded"></div>
+                </div>
+              </div>
+            ))}
+
+        {/* No Projects Message */}
+        {!loading && projects.length === 0 && (
+          <div className="col-span-full text-center text-white text-xl font-semibold">
+            No Public Projects Yet!
           </div>
-        ))}
+        )}
+
+        {/* Projects List */}
+        {!loading &&
+          projects.map((project) => (
+            <div
+              key={project.name}
+              className="bg-black rounded-lg p-4 border-2 border-x-red-100 shadow-lg flex flex-col"
+            >
+              <a
+                href={project.html_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center"
+              >
+                <img
+                  src={project.demo_url}
+                  alt={`${project.name} preview`}
+                  className="h-48 object-cover"
+                />
+                <h2 className="my-4 uppercase text-xl font-semibold text-center text-white">
+                  {project.name}
+                </h2>
+              </a>
+              <div className="flex justify-center gap-4">
+                <a
+                  href={project.demo_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-blue-500 text-white px-4 py-2 rounded-full text-center"
+                >
+                  View Demo
+                </a>
+                <a
+                  href={project.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-gray-500 text-white px-4 py-2 rounded-full text-center"
+                >
+                  View Repo
+                </a>
+              </div>
+            </div>
+          ))}
       </div>
     </div>
   );
